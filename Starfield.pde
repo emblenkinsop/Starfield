@@ -1,4 +1,4 @@
-Particle[] stars = new Particle[400];
+Particle[] stars = new Particle[500];
 
 void setup()
 {
@@ -10,11 +10,9 @@ void setup()
     stars[i] = new NormalParticle();
   for (int i=0; i<4; i++) {
     stars[i] = new OddballParticle(i);
-    System.out.println("oddball");
   }
   for (int i=4; i<10; i++) {
     stars[i] = new JumboParticle();
-    System.out.println("jumbo");
     }
 }
 void draw()
@@ -22,10 +20,11 @@ void draw()
   fill(0,50);
   rect(0,0,900,700);
   for (int i=0; i<stars.length; i++) {
-    stars[i].move();
+    stars[i].move(i);
     stars[i].show();
   }
   fill(0);
+  noStroke();
   ellipse(450,350,20,20);
 }
 class NormalParticle implements Particle
@@ -38,7 +37,7 @@ class NormalParticle implements Particle
     angle = Math.random()*2*PI;
     speed = (float)Math.random()*2;
   }
-  public void move() {
+  public void move(int a) {
     if ((xPos<0 || xPos>900) || (yPos<0 || yPos>700)) {
       xPos = 450;
       yPos = 350;
@@ -50,6 +49,7 @@ class NormalParticle implements Particle
     speed = speed*1.1;
   }
   public void show() {
+    noStroke();
     fill(255);
     ellipse(xPos, yPos, 5, 5);
   }
@@ -57,37 +57,49 @@ class NormalParticle implements Particle
 class OddballParticle implements Particle
 {
   float size,xPos,yPos;
-  int xDir,yDir;
+  //int xDir,yDir;
   OddballParticle(int a) {
     size = 0;
     xPos = 450;
     yPos = 350;
-    xDir = -1*(1+a);
-    yDir = -1*(int)(.5*(a+2));
   }
-  public void move() {
-    xPos = xPos+xDir;
-    yPos = xPos+yDir;
+  public void move(int a) {
+    if ((xPos<0 || xPos>900) || (yPos<0 || yPos>700)) {
+      size = size-(size-100);
+      xPos = 450;
+      yPos = 350;
+    }
+    if (a==0) {
+      xPos = xPos+1; yPos = yPos+1;
+    }
+    if (a==1) {
+      xPos = xPos+1; yPos = yPos-1;
+    }
+    if (a==2) {
+      xPos = xPos-1; yPos = yPos+1;
+    }
+    if (a==3) {
+      xPos = xPos-1; yPos = yPos-1;
+    }
   }
   public void show() {
     size++;
     noFill();
     strokeWeight(20);
-    stroke(0);
+    stroke(60,0,60);
     ellipse(xPos,yPos,size,size);
   }
 }
 class JumboParticle extends NormalParticle
  {
- //public void move() {
- //}
  public void show() {
-   fill(200,100,200);
+   noStroke();
+   fill(0,100,200);
    ellipse(xPos,yPos,20,20);   
  }
  }
 interface Particle
 {
-  public void move();
+  public void move(int a);
   public void show();
 }
