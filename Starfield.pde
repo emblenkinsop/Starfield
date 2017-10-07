@@ -2,7 +2,7 @@ Particle[] stars = new Particle[500];
 
 void setup()
 {
-  size(900, 700);
+  size(900, 600);
   background(0);
   noStroke();
 
@@ -18,14 +18,14 @@ void setup()
 void draw()
 {
   fill(0,50);
-  rect(0,0,900,700);
+  rect(0,0,900,600);
   for (int i=0; i<stars.length; i++) {
     stars[i].move(i);
     stars[i].show();
   }
   fill(0);
   noStroke();
-  ellipse(450,350,20,20);
+  ellipse(450,300,20,20);
 }
 class NormalParticle implements Particle
 {
@@ -33,14 +33,14 @@ class NormalParticle implements Particle
   float speed, xPos, yPos;
   NormalParticle() {
     xPos = 450;
-    yPos = 350;
+    yPos = 300;
     angle = Math.random()*2*PI;
     speed = (float)Math.random()*2;
   }
   public void move(int a) {
-    if ((xPos<0 || xPos>900) || (yPos<0 || yPos>700)) {
+    if ((xPos<0 || xPos>900) || (yPos<0 || yPos>600)) {
       xPos = 450;
-      yPos = 350;
+      yPos = 300;
       angle = Math.random()*2*PI;
       speed = (float)Math.random()*2;
     }
@@ -61,13 +61,13 @@ class OddballParticle implements Particle
   OddballParticle(int a) {
     size = 0;
     xPos = 450;
-    yPos = 350;
+    yPos = 300;
   }
   public void move(int a) {
-    if ((xPos<0 || xPos>900) || (yPos<0 || yPos>700)) {
+    if ((xPos<0 || xPos>900) || (yPos<0 || yPos>600)) {
       size = size-(size-100);
       xPos = 450;
-      yPos = 350;
+      yPos = 300;
     }
     if (a==0) {
       xPos = xPos+1; yPos = yPos+1;
